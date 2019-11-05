@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>ITEA-JS ADVANCED - LESSON 2: CLASSWORK 3</title>
+  <link rel="stylesheet" href="css/style.min.css" />
+</head>
+<body>
+  <div class="buttons" id="target">
+    <button class="popup__button" id="popup_1" data-popup="1"> Show popup 1</button>
+    <button class="popup__button" id="popup_2" data-popup="2"> Show popup 2</button>
+    <button class="popup__button" id="popup_3" data-popup="3"> Show popup 3</button>
+  </div>
+
+  <div class="popup" id="popup">
+
+    <div class="popup__body">
+      <button class="popup__close" id="popup__close">Close popup</button>
+      <div class="popup__container" id="popup__container">
+        <div class="popup__item" data-popup="1"><h2>I'm first popup</h2></div>
+        <div class="popup__item" data-popup="2"><h2>I'm second popup</h2></div>
+        <div class="popup__item" data-popup="3"><h2>I'm third popup</h2></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*
+
+      Задача: Сделать корректно работающее всплывающее окно.
+      Условие: Узменять HTML разметку выше - нельзя.
+      При нажании на одну из кнопок, должно открытся окно с соответствующим data- аттрибутом.
+      При нажатии на кнопку close окно дожно закрываться.
+
+    */
+
+    // отловить клик
+    // определить на что кликнули
+    // посмотреть у него data-popup атрибут
+    // найти в модалке элемент с этим аттрибутом
+    // добавить ему класс шоу
+    // отключить у остальных
+
+
+    var modal = document.getElementById("popup");
+    var btn = document.getElementById("target");
+
+    var close = document.getElementById("popup__close");
+
+    var btn_1 = document.getElementById("popup_1");
+    var btn_2 = document.getElementById("popup_2");
+    var btn_3 = document.getElementById("popup_3");
+
+
+    var modal_1 = document.querySelectorAll('.popup__item[data-popup="1"]')[0];
+    var modal_2 = document.querySelectorAll('.popup__item[data-popup="2"]')[0];
+    var modal_3 = document.querySelectorAll('.popup__item[data-popup="3"]')[0];
+
+
+
+    btn_1.onclick = function () {
+        modal.classList.add('show');
+        modal_1.classList.add("show");
+    };
+
+    btn_2.onclick = function () {
+        modal.classList.add('show');
+        modal_2.classList.add('show');
+    };
+    btn_3.onclick = function () {
+        modal.classList.add('show');
+        modal_3.classList.add('show');
+    };
+    close.onclick = function () {
+        modal.classList.remove('show');
+        modal_1.classList.remove("show");
+        modal_2.classList.remove("show");
+        modal_3.classList.remove("show");
+    }
+
+    // btn.onclick = function() {
+    //     modal.classList.add('show');
+    // };
+    // close.onclick = function() {
+    //     modal.classList.remove('show');
+    // };
+    // window.onclick = function(event) {
+    //     if (event.target == modal) {
+    //         modal.classList.remove('show');
+    //     }
+    // };
+
+    // var popup = document.data-popup; // коллекция всех ссылок на странице
+    // [].forEach.call(links, function(link) {
+    //
+    //     link.classList.add('link-active');
+    // });
+
+
+
+
+
+
+  </script>
+</body>
+</html>
