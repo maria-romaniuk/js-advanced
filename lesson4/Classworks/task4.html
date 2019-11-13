@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Form work1</title>
+  <script>
+    /*
+      Задание:
+
+      1. Сгенерировать список стран в Select countries
+      2. При выборе страны генерировать еще один Select со списком
+        городов этой страны и вывести этот селект в блок result
+      3. При выборе города нужно случайно рандомить температуру от
+      -10 градусов до +40. Если температура
+
+        -10 до 0 то 'Солнечно' 'Легкий снегопад' 'Сильный снегопад'
+        0 до 30 то  'Солнечно' 'Дождь' 'Ветер' 'Сильный дождь'
+        30 до 40 то 'Солнечно' 'Засуха' 'Ветер'
+
+      4. Вывести сообщение на страничку
+        {Country}. В {City} {Weather} {Temperature} градусов.
+        Ukraine. В Kyiv Солнечно -10 градусов
+
+        + бонус добавить красивые картинки с погодой
+    */
+
+    function getRandomIntInclusive(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var countries = ['Ukraine', 'Poland', 'USA'];
+    var ukraineCity = ['Kyiv', 'Lviv', 'Odesa', 'Charkiv'];
+    var polandCity = ['Warszawa', 'Poznan', 'Krakow', 'Katowice'];
+    var usaCity = ['New York', 'Los Angeles', 'Las Vegas', 'Chicago'];
+
+    var data = {
+        "Ukraine": ukraineCity,
+        "Poland": polandCity,
+        "USA": usaCity
+    };
+
+    function getWeatherByTemperature(temperature) {
+      if (temperature > -10 && temperature < 0) {
+        return "Солнечно, Легкий снегопад, Сильный снегопад"
+      } 
+
+      if (temperature > 0 && temperature < 30) {
+        return "Солнечно, Дождь, Ветер, Сильный дождь";
+      } 
+
+      if (temperature > 30) {
+        return "Солнечно, Засуха, Ветер";
+      } 
+    }
+
+    window.addEventListener("DOMContentLoaded", function () {
+      var countriesSelect = document.getElementById('countries');
+      var result = document.getElementById('result');
+      var forecast = document.getElementById('forecast');
+      
+      var defaultOption = new Option('choose a country', '', true, true);
+      defaultOption.disabled = true;
+      countriesSelect.appendChild(defaultOption);   
+
+      countries.forEach(function(item) { 
+        var option = new Option(item, item, false, false);
+        countriesSelect.appendChild(option);
+      });
+
+      countriesSelect.addEventListener('input', function(e) {     
+        var citySelect = document.createElement('select');  
+        var selectedCountry =  e.target.value;
+        data[selectedCountry].forEach( function(item) {
+          var option = new Option(item, item, false, false);
+          citySelect.appendChild(option);
+        });
+
+        result.innerHTML = '';
+        result.appendChild(citySelect);
+
+        citySelect.addEventListener('input', function(e) {
+          var randomTemperature = getRandomIntInclusive(-10, 40);
+          var currentWeather = getWeatherByTemperature(randomTemperature);
+          var selectedCity = e.target.value;
+
+          var weatherInfo = selectedCountry + '. В ' + selectedCity + ' ' + currentWeather + ' ' + randomTemperature + 'градусов.';
+
+          forecast.innerHTML = weatherInfo;
+        })
+      });
+    });
+
+  </script>
+</head>
+<body>
+  <select id="countries"></select>
+  <div id="result"></div>
+  <p id="forecast"></p>  
+</body>
+</html>
