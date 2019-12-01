@@ -20,3 +20,43 @@
 
   var OurSliderImages = ['images/cat1.jpg', 'images/cat2.jpg', 'images/cat3.jpg', 'images/cat4.jpg', 'images/cat5.jpg', 'images/cat6.jpg', 'images/cat7.jpg', 'images/cat8.jpg'];
   var currentPosition = 0;
+
+var slider = document.getElementById('slider');
+console.log(slider);
+var slide = document.createElement('img');
+console.log(slide);
+
+
+
+
+
+window.addEventListener('load', function(){
+  slider.appendChild(slide);
+    var CurrentSlideImg = 0;
+    slide.src = OurSliderImages[CurrentSlideImg];
+    var NextSlide = document.getElementById('NextSilde');
+    var PrevSlide = document.getElementById('PrevSilde');
+
+    NextSlide.addEventListener('click', function () {
+        if (CurrentSlideImg++ < OurSliderImages.length - 1){
+            slide.src = OurSliderImages[CurrentSlideImg];
+        } else{
+            CurrentSlideImg = 0;
+            slide.src = OurSliderImages[CurrentSlideImg];
+        }
+    });
+    PrevSlide.addEventListener('click', function () {
+        if (CurrentSlideImg-- > 0){
+            console.log(CurrentSlideImg);
+            slide.src = OurSliderImages[CurrentSlideImg];
+        } else{
+            CurrentSlideImg = OurSliderImages.length - 1;
+            slide.src = OurSliderImages[CurrentSlideImg];
+        }
+    })
+});
+
+
+// создать/считать блок слайдера
+// иметь список используемых картинок
+// на кнопку слде слайд изменить элемент массива i++
