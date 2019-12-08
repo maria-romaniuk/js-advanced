@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Classwork</title>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {    
+
+    /*
+      Задание:
+      1. При помощи методов изложеных ниже, переформатировать ITEA_COURSES в массив который содержит длину строк каждого из элементов.
+      2. Самостоятельно изучить метод Array.sort. Отфильтровать массив ITEA_COURSES по алфавиту.
+          + Бонусный бал. Вывести на страничку списком
+      3. Реализация функции поиска по массиву ITEA_COURSES.
+          + Бонусный бал. Вывести на страничку инпут и кнопку по которой будет срабатывать поиск.
+    */
+
+        const ITEA_COURSES = ["Курс HTML & CSS", "JavaScript базовый курс", "JavaScript продвинутый курс", "JavaScript Professional", "Angular 2.4 (базовый)", "Angular 2.4 (продвинутый)", "React.js", "React Native", "Node.js", "Vue.js"];
+
+        // TASK 1.1 ####################
+        let arrOfItemsLength = ITEA_COURSES.map( item => item.length);
+
+        //console.log(arrOfItemsLength);
+
+        // TASK 1.2 ####################
+        let sortedList = document.getElementById('sortedList');
+
+        const displaySortedArray = (arr) => {
+          sortedList.innerHTML = arr.sort().map( item => (`<li>${item}</li>`)).join(' ');
+        }    
+
+        displaySortedArray(ITEA_COURSES);
+
+        // TASK 1.3 ####################
+        const filterArray = (arr, str) => {
+          let innerArr = [...arr];
+
+          let filterdArr = arr.filter( item => item.toLowerCase().indexOf(str.toLowerCase()) !== -1);
+
+          displaySortedArray(filterdArr);          
+        }
+
+        let searchBtn = document.getElementById('searchBtn')
+        
+        searchBtn.addEventListener('click', () => {
+          filterArray(ITEA_COURSES, document.getElementById('searchInput').value);
+        });
+
+    /*
+      Задание 2:
+      Написать фильтр массива по:
+      Актеру, продолжительности
+
+      Бонус:
+        Сделать графическую оболочку для программы:
+        - Селект со списком актеров
+        - Селект или инпут с продолжительностью
+        - Результат в виде списка фильмов
+    */
+
+        var stars = ['Elijah Wood', 'Ian McKellen', 'Orlando Bloom','Ewan McGregor',' Liam Neeson', 'Natalie Portman', 'Ewan McGregor', 'Billy Bob Thornton', 'Martin Freeman'];
+        var movies = [
+              {
+                name: "Lord of the Rigs",
+                duration: 240,
+                starring: [ 'Elijah Wood', 'Ian McKellen', 'Orlando Bloom']
+              },
+              {
+                name: "Star Wars: Episode I - The Phantom Menace",
+                duration: 136,
+                starring: [ 'Ewan McGregor',' Liam Neeson', 'Natalie Portman']
+              },
+              {
+                name: "Fargo",
+                duration: 100,
+                starring: [ 'Ewan McGregor', 'Billy Bob Thornton', 'Martin Freeman']
+              },
+              {
+              name: "V for Vendetta",
+              duration: 150,
+              starring: [ 'Hugo Weaving', 'Natalie Portman', 'Rupert Graves']
+            }
+          ];
+        
+          let movieStars = document.getElementById('movieStars');
+          let moviesBlock = document.getElementById('moviesBlock');
+          let durationFilter = document.getElementById('durationFilter');
+
+          const buildMoviesList = (arr) => {
+            moviesBlock.innerHTML = arr.map( item => {
+              return `
+                      <li>
+                        <h3>Movie name: ${item.name}</h3>
+                        <span>Duration: ${item.duration}</span>
+                        <p>Starring: ${item.starring.join(',')}</p>
+                      </li>
+                      `
+            })
+          }
+
+          stars.forEach( item => {
+            movieStars.appendChild(new Option(item, item));
+          });
+
+          const filterByStar = (star) => movies.filter(x => x.starring.includes(star));
+          const filterByLength = (length) => movies.filter(x => x.duration > length);
+
+          movieStars.addEventListener('change', () => {
+            buildMoviesList(filterByStar(movieStars.options[movieStars.selectedIndex].value));
+          });
+
+          durationFilter.addEventListener('input', (e) => {
+            buildMoviesList(filterByLength(e.target.value));
+          })
+
+          buildMoviesList(movies);
+      });
+
+    </script>
+</head>
+<body>
+  <!-- first task -->
+  
+  <h1>Sorted array</h1>
+  <label>
+    Find a course
+    <input id="searchInput" type="text">
+  </label>
+  <button id="searchBtn">Search!</button>
+  <ul id="sortedList"></ul>
+
+  <!-- second task -->
+
+  <h2>Movies filter</h2>
+  <select id="movieStars"></select>
+  <input id="durationFilter" placeholder="filter by length" type="text">
+  <ul id="moviesBlock"></ul>
+
+</body>
+</html>
